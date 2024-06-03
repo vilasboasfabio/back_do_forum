@@ -8,6 +8,7 @@ const avaliacoesRoutes = require('./routes/avaliacoes.routes.js');
 const loginRoutes = require('./routes/login.routes.js');
 const favoritosRoutes = require('./routes/favoritos.routes.js');
 const avaliacoesController = require('./routes/avaliacoes.routes.js');
+const contatosController =  require('./routes/contato.routes.js')
 
 
 
@@ -26,6 +27,7 @@ app.use('/', usuariosRoutes);
 app.use('/', restaurantesRoutes);
 app.use('/', avaliacoesRoutes);
 app.use('/', avaliacoesController);
+app.use('/', contatosController);
 
 
 app.listen(port, () => {
