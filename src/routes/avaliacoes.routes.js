@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const reviewController = require('../controllers/avaliacoesController'); // Ajuste o caminho conforme a estrutura do seu projeto
+const authenticateToken = require('../middleware/authMiddleware');
+const { addReview, getReviewsByRestaurant } = require('../controllers/avaliacoesController');
 
-router.post('/reviews', reviewController.addReview);
-router.get('/reviews/restaurant/:restaurantId', reviewController.getReviewsByRestaurant);
-router.put('/reviews/:id', reviewController.updateReview);
-router.delete('/reviews/:id', reviewController.deleteReview);
-router.post('/reviews/:id/like', reviewController.likeReview);
+// Rota para adicionar uma nova avaliação
+router.post('/review', authenticateToken, addReview);
+
+// Rota para obter todas as avaliações de um restaurante específico
+router.get('/reviews/:restaurantId', getReviewsByRestaurant);
 
 module.exports = router;

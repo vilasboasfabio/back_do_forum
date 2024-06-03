@@ -7,26 +7,26 @@ const addRestaurant = async (req, res) => {
     name,
     location,
     priceLevel,
-    cuisineTypeId,
+    cuisineType,
     chefName,
     description,
     openingDays,
     paymentMethods,
     rating,
     foundationDate,
-    menuPDF,
-    photoUrl,
+    photos,
+    menuLink
   } = req.body;
 
   try {
     const result = await pool.query(
-      'INSERT INTO Restaurants (Name, Location, PriceLevel, CuisineTypeID, ChefName, Description, OpeningDays, PaymentMethods, Rating, FoundationDate, menulink, Photos) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-      [name, location, priceLevel, cuisineTypeId, chefName, description, openingDays, paymentMethods, rating, foundationDate, menuPDF, photoUrl]
+      'INSERT INTO restaurants (name, location, priceLevel, cuisineType, chefName, description, openingDays, paymentMethods, rating, foundationDate, photos, menuLink) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+      [name, location, priceLevel, cuisineType, chefName, description, openingDays, paymentMethods, rating, foundationDate, photos, menuLink]
     );
     res.json(result.rows[0]);
   } catch (error) {
-    console.error('Error inserting into database:', error);
-    res.status(500).send('Error inserting into database');
+    console.error('Error adding restaurant:', error);
+    res.status(500).send('Error adding restaurant');
   }
 };
 
@@ -88,7 +88,7 @@ const getRestaurantById = async (req, res) =>{
   const { id } = req.params;
 
   try {
-    const result = await pool.query('SELECT * FROM Restaurants WHERE RestaurantID = $1', [id]);
+    const result = await pool.query('SELECT * FROM Restaurants WHERE restaurantid = $1', [id]);
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error fetching from database:', error);
