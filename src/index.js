@@ -7,6 +7,9 @@ const restaurantesRoutes = require('./routes/restaurantes.routes.js');
 const avaliacoesRoutes = require('./routes/avaliacoes.routes.js');
 const loginRoutes = require('./routes/login.routes.js');
 const favoritosRoutes = require('./routes/favoritos.routes.js');
+const avaliacoesController = require('./routes/avaliacoes.routes.js');
+
+
 
 const app = express();
 
@@ -22,6 +25,8 @@ app.use('/', loginRoutes);
 app.use('/', usuariosRoutes);
 app.use('/', restaurantesRoutes);
 app.use('/', avaliacoesRoutes);
+app.use('/', avaliacoesController);
+
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port} 🥂`);

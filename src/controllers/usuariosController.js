@@ -78,6 +78,7 @@ const deleteUser = async (req, res) => {
 
 // Função para obter um usuário pelo ID
 const getUserById = async (req, res) => {
+
   const { id } = req.params;
 
   try {
@@ -90,6 +91,7 @@ const getUserById = async (req, res) => {
 };
 
 // Função para obter um usuário pelo email
+
 const getUserByEmail = async (req, res) => {
   const { email } = req.params;
 
