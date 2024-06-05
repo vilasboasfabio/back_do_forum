@@ -5,14 +5,14 @@ const addContato = async (req, res) => {
     nome,
     email,
     telefone,
-    mensagem
+    menssagem
   } = req.body;
 
   console.log
     try {
         const result = await pool.query(
         'INSERT INTO Contato (Nome, Email, Telefone, Mensagem) VALUES ($1, $2, $3, $4) RETURNING *',
-        [nome, email, telefone, mensagem]
+        [nome, email, telefone, menssagem]
         );
         res.json(result.rows[0]);
     } catch (error) {
@@ -37,13 +37,13 @@ const updateContato = async (req, res) => {
         nome,
         email,
         telefone,
-        mensagem
+        menssagem
     } = req.body;
 
     try {
         const result = await pool.query(
             'UPDATE Contatos SET Nome = $1, Email = $2, Telefone = $3, Mensagem = $4, ID = $5 RETURNING *',
-            [nome, email, telefone, mensagem, id]
+            [nome, email, telefone, menssagem, id]
         );
         res.json(result.rows[0]);
     } catch (error) {

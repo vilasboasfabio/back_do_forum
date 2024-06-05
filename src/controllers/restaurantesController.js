@@ -14,14 +14,14 @@ const addRestaurant = async (req, res) => {
     paymentMethods,
     rating,
     foundationDate,
-    photos,
+    photoUrl,
     menuLink
   } = req.body;
 
   try {
     const result = await pool.query(
       'INSERT INTO restaurants (name, location, priceLevel, cuisineType, chefName, description, openingDays, paymentMethods, rating, foundationDate, photos, menuLink) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-      [name, location, priceLevel, cuisineType, chefName, description, openingDays, paymentMethods, rating, foundationDate, photos, menuLink]
+      [name, location, priceLevel, cuisineType, chefName, description, openingDays, paymentMethods, rating, foundationDate, photoUrl, menuLink]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -48,21 +48,21 @@ const updateRestaurant = async (req, res) => {
     name,
     location,
     priceLevel,
-    cuisineTypeId,
+    cuisineType,
     chefName,
     description,
     openingDays,
     paymentMethods,
     rating,
     foundationDate,
-    menuPDF,
     photoUrl,
+    menuLink
   } = req.body;
 
   try {
     const result = await pool.query(
-      'UPDATE Restaurants SET Name = $1, Location = $2, PriceLevel = $3, CuisineTypeID = $4, ChefName = $5, Description = $6, OpeningDays = $7, PaymentMethods = $8, Rating = $9, FoundationDate = $10, menulink = $11, Photos = $12 WHERE RestaurantID = $13 RETURNING *',
-      [name, location, priceLevel, cuisineTypeId, chefName, description, openingDays, paymentMethods, rating, foundationDate, menuPDF, photoUrl, id]
+      'UPDATE Restaurants SET Name = $1, Location = $2, PriceLevel = $3, cuisinetype = $4, ChefName = $5, Description = $6, OpeningDays = $7, PaymentMethods = $8, Rating = $9, FoundationDate = $10, menulink = $11, Photos = $12 WHERE RestaurantID = $13 RETURNING *',
+      [name, location, priceLevel, cuisineType, chefName, description, openingDays, paymentMethods, rating, foundationDate, menuLink, photoUrl, id]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -71,18 +71,25 @@ const updateRestaurant = async (req, res) => {
   }
 };
 
-// Função para deletar um restaurante
 const deleteRestaurant = async (req, res) => {
-  const { id } = req.params;
-
+  const restaurantId = req.params.id;
   try {
-    await pool.query('DELETE FROM Restaurants WHERE RestaurantID = $1', [id]);
-    res.sendStatus(204);
+    // Primeiro, exclua as reviews associadas
+    await pool.query('DELETE FROM reviews WHERE restaurantid = $1', [restaurantId]);
+
+    // Exclua os favoritos associados
+    await pool.query('DELETE FROM favorites WHERE restaurantid = $1', [restaurantId]);
+
+    // Em seguida, exclua o restaurante
+    await pool.query('DELETE FROM restaurants WHERE restaurantid = $1', [restaurantId]);
+
+    res.status(200).send({ message: 'Restaurant deleted successfully' });
   } catch (error) {
     console.error('Error deleting from database:', error);
-    res.status(500).send('Error deleting from database');
+    res.status(500).send('Error deleting restaurant');
   }
 };
+
 
 const getRestaurantById = async (req, res) =>{
   const { id } = req.params;

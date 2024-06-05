@@ -8,6 +8,8 @@ router.post('/restaurants', upload.fields([{name: 'photos', maxCount: 10 }]), re
 router.get('/restaurants', restaurantController.getRestaurants);
 router.put('/restaurants/:id', upload.fields([{ name: 'photos', maxCount: 10 }]), restaurantController.updateRestaurant);
 router.delete('/restaurants/:id', restaurantController.deleteRestaurant);
+router.get('/restaurants/:id', restaurantController.getRestaurantById);
+
 
 router.use(cuisineTypeRoutes);
 
