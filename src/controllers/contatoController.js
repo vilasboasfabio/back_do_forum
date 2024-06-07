@@ -145,7 +145,7 @@ const getContatoByNome = async (req, res) => {
     }
 }
 
-//Exporta as funções addReview e getReviewByRestaurant para serem utilizadas em outras partes da aplicação;
+//Exporta as funções para serem utilizadas em outras partes da aplicação;
 module.exports = {
     addContato,
     getContato,
