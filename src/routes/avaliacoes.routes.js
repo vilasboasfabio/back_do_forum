@@ -7,7 +7,7 @@ const router = express.Router();
 //Importa o middleware de autenticação de token;
 const authenticateToken = require('../middleware/authMiddleware');
 
-//Importa o controllers;
+//Importa as funcões do controllers;
 const { addReview, getReviewsByRestaurant } = require('../controllers/avaliacoesController');
 
 // Rota para adicionar uma nova avaliação
