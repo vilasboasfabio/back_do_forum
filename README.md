@@ -63,7 +63,7 @@ git clone https://github.com/vilasboasfabio/back_do_forum.git
 2. Instale as dependências:
 
 ```
-npm install expo --fix
+npm install
 ```
 
 3. Configure o banco de dados PostgreSQL:
